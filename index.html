@@ -4,82 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>القيمة المنزلية للصف الثاني - المعلمة علياء العويوي</title>
-<style>
-*{box-sizing:border-box} body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5fbf8;color:#173b32}
-.wrap{max-width:760px;margin:auto;padding:18px}.head{text-align:center;background:white;border-radius:22px;padding:20px;border:1px solid #d8eee6}
-.head h1{font-size:25px;margin:16px 0 7px;color:#12664f}.head p{margin:5px}.flag{font-size:34px}
-.teacher{display:inline-block;background:#e8f8f1;padding:9px 18px;border-radius:14px;font-weight:bold;margin-top:10px}
-.card{background:#fff;margin-top:15px;padding:20px;border-radius:22px;border:1px solid #d8eee6}
-.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:bold}
-.num{text-align:center;font-size:58px;font-weight:bold;margin:20px 0 8px}.question{text-align:center;font-size:21px;font-weight:bold;line-height:1.7}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-button{font-family:inherit;font-size:20px;font-weight:bold;border:2px solid #b9ddd0;background:#f8fffc;border-radius:16px;padding:15px;cursor:pointer;color:#173b32}
-button:hover{background:#eaf8f2}.correct{background:#dff5e8!important;border-color:#47a66d!important}.wrong{background:#fde8e8!important;border-color:#d96b6b!important}
-.feedback{text-align:center;min-height:36px;font-size:18px;font-weight:bold;margin:16px 0}
-.controls{text-align:center}.next,.restart{font-size:17px;padding:12px 20px;margin:5px}.next{background:#12664f;color:#fff;border-color:#12664f}
-.next:disabled{opacity:.45}.restart{background:white}.result{text-align:center;font-size:24px;line-height:1.8}
-@media(max-width:480px){.answers{grid-template-columns:1fr}.head h1{font-size:22px}.num{font-size:50px}}
-</style>
-</head>
-<body>
-<div class="wrap">
-<section class="head">
-<div class="flag">🇵🇸</div>
-<p><b>وزارة التربية والتعليم العالي – فلسطين</b></p>
-<p>مديرية التربية والتعليم – الخليل</p>
-<p>مدرسة ربعي الشريف الأساسية للبنات</p>
-<h1>🧮 لعبة القيمة المنزلية للأعداد</h1>
-<p><b>الصف الثاني الأساسي</b></p>
-<div class="teacher">المعلمة علياء العويوي</div>
-</section>
 
-<section class="card" id="game">
-<div class="top"><span>⭐ النقاط: <b id="score">٠</b></span><span>السؤال <b id="qno">١</b> من ١٠</span></div>
-<div class="num" id="number"></div>
-<div class="question" id="question"></div>
-<div class="answers" id="answers"></div>
-<div class="feedback" id="feedback"></div>
-<div class="controls">
-<button class="next" id="next" disabled>السؤال التالي ←</button>
-<button class="restart" id="restart">إعادة اللعب</button>
-</div>
-</section>
-</div>
-<script>
-const questions=[
-{n:"٣٤",q:"ما القيمة المنزلية للرقم ٣؟",a:"٣٠",o:["٣","٣٠","٤","٤٠"]},
-{n:"٥٧",q:"ما القيمة المنزلية للرقم ٧؟",a:"٧",o:["٧٠","٥٠","٧","٥"]},
-{n:"٨٢",q:"ما القيمة المنزلية للرقم ٨؟",a:"٨٠",o:["٨","٢","٢٠","٨٠"]},
-{n:"٤٦",q:"أي رقم يقع في منزلة الآحاد؟",a:"٦",o:["٤","٤٠","٦","٦٠"]},
-{n:"٩١",q:"أي رقم يقع في منزلة العشرات؟",a:"٩",o:["١","١٠","٩","٩٠"]},
-{n:"٢٥",q:"ما القيمة المنزلية للرقم ٢؟",a:"٢٠",o:["٢","٥","٢٠","٥٠"]},
-{n:"٦٣",q:"ما القيمة المنزلية للرقم ٣؟",a:"٣",o:["٣٠","٦٠","٦","٣"]},
-{n:"٧٤",q:"ما القيمة المنزلية للرقم ٧؟",a:"٧٠",o:["٧","٤","٤٠","٧٠"]},
-{n:"٣٩",q:"ما القيمة المنزلية للرقم ٩؟",a:"٩",o:["٩٠","٣٠","٣","٩"]},
-{n:"٥١",q:"أي رقم يقع في منزلة العشرات؟",a:"٥",o:["١","١٠","٥","٥٠"]}
-];
-const arab=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
-let i=0,score=0,locked=false;
-const $=id=>document.getElementById(id);
-function show(){
- locked=false;$("next").disabled=true;$("feedback").textContent="";
- $("score").textContent=arab(score);$("qno").textContent=arab(i+1);
- const x=questions[i];$("number").textContent=x.n;$("question").textContent=x.q;$("answers").innerHTML="";
- x.o.forEach(v=>{const b=document.createElement("button");b.textContent=v;b.onclick=()=>answer(v,b);$("answers").appendChild(b)});
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:#f5fbf8;
+  color:#173b32
 }
-function answer(v,b){
- if(locked)return;locked=true;const x=questions[i];
- [...$("answers").children].forEach(z=>z.disabled=true);
- if(v===x.a){score++;b.classList.add("correct");$("feedback").textContent="🌟 أحسنتِ يا بطلة! إجابة صحيحة."}
- else{b.classList.add("wrong");[...$("answers").children].forEach(z=>{if(z.textContent===x.a)z.classList.add("correct")});$("feedback").textContent="💡 حاولي الانتباه للآحاد والعشرات. الإجابة الصحيحة: "+x.a}
- $("score").textContent=arab(score);$("next").disabled=false;$("next").textContent=i===questions.length-1?"عرض النتيجة":"السؤال التالي ←";
+.wrap{max-width:760px;margin:auto;padding:18px}
+.head{
+  text-align:center;
+  background:white;
+  border-radius:22px;
+  padding:20px;
+  border:1px solid #d8eee6
 }
-$("next").onclick=()=>{
- if(i<questions.length-1){i++;show()}else{
- $("game").innerHTML='<div class="result">🎉 <b>أحسنتِ يا بطلة!</b><br>أنهيتِ لعبة القيمة المنزلية.<br>نتيجتك: ⭐ '+arab(score)+' من '+arab(questions.length)+'<br><button class="restart" onclick="location.reload()">العبِي مرة أخرى</button></div>';
- }
-};
-$("restart").onclick=()=>{i=0;score=0;show()};show();
-</script>
-</body>
-</html>
+.head h1{font-size:25px;margin:16px 0 7px;color:#12664f}
+.head p{margin:5px}
+.flag{font-size:34px}
+.teacher{
+  display:inline-block;
+  background:#e8f8f1;
+  padding:9px 18px;
+  border-radius:14px;
+  font-weight:bold;
+  margin-top:10px
+}
+.card{
+  background:#fff;
+  margin-top:15px;
+  padding:20px;
+  border-radius:22px;
+  border:1px solid #d8eee6
